@@ -40,7 +40,7 @@ public class ToDoServiceTest {
         when(toDoRepository.findAll()).thenReturn(toDoList);
 
         List<ToDo> result = toDoService.getAllToDo();
-        assertEquals(3, result.size());
+        assertEquals(4, result.size());
     }
 
     @Test
