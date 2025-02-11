@@ -24,7 +24,7 @@ pipeline {
                 sh 'mvn clean install'
                 sh "cp target/*.jar ${env.BUILD_DIR}/app.jar"
                 script {
-                    env.APP_VERSION = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+                    env.APP_VERSION = sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
                     echo "Project Version: ${env.APP_VERSION}"
                 }
             }
