@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         // Directorio compartido entre los agentes (puedes usar cualquier directorio)
-        BUILD_DIR = '/tmp/build'  // Directorio temporal para almacenar el .jar generado
+        BUILD_DIR = '/tmp'  // Directorio temporal para almacenar el .jar generado
     }
     stages {
         stage('Test') {
