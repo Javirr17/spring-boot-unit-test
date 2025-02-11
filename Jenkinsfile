@@ -9,7 +9,7 @@ pipeline {
                 label 'agent-mvn'
             }
             steps {
-                mvn test
+                sh 'mvn test'
             }
         }
         stage('Build') {
@@ -17,7 +17,7 @@ pipeline {
                 label 'agent-mvn'
             }
             steps {
-                mvn clean install
+                 sh 'mvn clean install'
             }
         }
         stage('Deploy') {
@@ -25,7 +25,7 @@ pipeline {
                 label 'agent-docker'
             }
             steps {
-                docker ps
+                 sh 'docker ps'
             }
         }
     }
