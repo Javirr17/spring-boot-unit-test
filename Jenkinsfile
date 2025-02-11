@@ -30,7 +30,7 @@ pipeline {
                 label 'agent-docker'
             }
             steps {
-                 sh 'cp ${env.BUILD_DIR}/app.jar target/.'
+                 sh "cp ${env.BUILD_DIR}/app.jar target/."
                  sh 'docker build -t my-app-image .'
             }
         }
