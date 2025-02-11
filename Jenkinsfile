@@ -5,18 +5,27 @@ pipeline {
     }
     stages {
         stage('Build') {
+            agent {
+                label 'agent-mvn'
+            }
             steps {
-                echo 'Building..'
+                mvn clean
             }
         }
         stage('Test') {
+            agent {
+                label 'agent-mvn'
+            }
             steps {
-                echo 'Testing..'
+                mvn test
             }
         }
         stage('Deploy') {
+            agent {
+                label 'agent-docker'
+            }
             steps {
-                echo 'Deploying....'
+                docker ps
             }
         }
     }
