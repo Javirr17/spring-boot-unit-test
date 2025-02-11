@@ -1,3 +1,5 @@
+def APP_VERSION = ''
+
 pipeline {
     agent any
     triggers {
@@ -5,7 +7,6 @@ pipeline {
     }
     environment {
         BUILD_DIR = '/tmp/build'  // Directorio compartido para almacenar el .jar generado
-        APP_VERSION = ''
     }
     stages {
         stage('Test') {
@@ -23,9 +24,9 @@ pipeline {
             steps {
                 sh 'mvn clean install'
                 sh "cp target/*.jar ${env.BUILD_DIR}/app.jar"
+                sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout > version.txt"
                 script {
-                    env.APP_VERSION = sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
-                    echo "Project Version: ${env.APP_VERSION}"
+                    APP_VERSION = readFile('version.txt').trim()
                 }
             }
         }
@@ -36,7 +37,7 @@ pipeline {
             steps {
                  sh "cp ${env.BUILD_DIR}/app.jar ."
                  echo "Commit ID: ${env.GIT_COMMIT}"
-                 sh "docker build -t my-app-image:${env.APP_VERSION} ."
+                 sh "docker build -t my-app-image:${APP_VERSION} ."
             }
         }
     }
