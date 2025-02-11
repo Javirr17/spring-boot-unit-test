@@ -31,6 +31,7 @@ pipeline {
             }
             steps {
                  sh "cp ${env.BUILD_DIR}/app.jar ."
+                 echo "Commit ID: ${env.GIT_COMMIT}"
                  sh 'docker build -t my-app-image .'
             }
         }
