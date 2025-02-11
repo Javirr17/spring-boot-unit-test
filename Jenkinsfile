@@ -4,20 +4,20 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
-        stage('Build') {
-            agent {
-                label 'agent-mvn'
-            }
-            steps {
-                mvn clean
-            }
-        }
         stage('Test') {
             agent {
                 label 'agent-mvn'
             }
             steps {
                 mvn test
+            }
+        }
+        stage('Build') {
+            agent {
+                label 'agent-mvn'
+            }
+            steps {
+                mvn clean install
             }
         }
         stage('Deploy') {
