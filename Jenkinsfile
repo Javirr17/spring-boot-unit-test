@@ -3,6 +3,10 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
+    environment {
+        // Directorio compartido entre los agentes (puedes usar cualquier directorio)
+        BUILD_DIR = '/tmp/build'  // Directorio temporal para almacenar el .jar generado
+    }
     stages {
         stage('Test') {
             agent {
@@ -18,6 +22,7 @@ pipeline {
             }
             steps {
                  sh 'mvn clean install'
+                 sh "cp target/*.jar ${env.BUILD_DIR}/app.jar"
             }
         }
         stage('Deploy') {
@@ -25,7 +30,7 @@ pipeline {
                 label 'agent-docker'
             }
             steps {
-                 sh 'docker ps'
+                 sh 'docker build -t my-app-image .'
             }
         }
     }
