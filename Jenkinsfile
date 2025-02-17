@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Test') {
             agent {
-                label 'agent-mvn'
+                label 'mvn-agent'
             }
             steps {
                 sh 'mvn test'
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Build') {
             agent {
-                label 'agent-mvn'
+                label 'mvn-agent'
             }
             steps {
                 sh 'mvn clean install'
@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Deploy') {
             agent {
-                label 'agent-docker'
+                label 'docker-agent'
             }
             steps {
                  sh "cp ${env.BUILD_DIR}/app.jar ."
