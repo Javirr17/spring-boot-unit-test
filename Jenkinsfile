@@ -45,8 +45,8 @@ pipeline {
                  sh "docker tag my-app-image:${APP_VERSION} mynexus.com:8090/my-app-image:${APP_VERSION}"
                  sh "docker push mynexus.com:8090/my-app-image:${APP_VERSION}"
                  sh "docker logout"
-                 /*sh "docker rmi my-app-image:${APP_VERSION} --force"
-                 sh "docker rmi mynexus.com:8090/my-app-image:${APP_VERSION} --force"*/
+                 sh "docker rmi my-app-image:${APP_VERSION} --force"
+                 sh "docker rmi mynexus.com:8090/my-app-image:${APP_VERSION} --force"
             }
         }
     }
