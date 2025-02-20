@@ -40,7 +40,7 @@ pipeline {
                  sh "mv ${env.BUILD_DIR}/${JAR_NAME} app.jar"
                  sh "docker build -t my-app-image:${APP_VERSION} ."
                  withCredentials([usernamePassword(credentialsId: 'nexus-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                     sh "echo $DOCKER_PASS | docker login mynexus.com:8090 -u $DOCKER_USER --password-stdin"
+                     sh "echo $DOCKER_PASS | docker login http://mynexus.com:8090 -u $DOCKER_USER --password-stdin"
                  }
                  sh "docker tag my-app-image:${APP_VERSION} mynexus.com:8090/my-app-image:${APP_VERSION}"
                  sh "docker push mynexus.com:8090/my-app-image:${APP_VERSION}"
