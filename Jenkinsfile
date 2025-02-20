@@ -1,4 +1,5 @@
 def APP_VERSION = ''
+def JAR_NAME = ''
 
 pipeline {
     agent any
@@ -20,7 +21,11 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
-                sh "cp target/*.jar ${env.BUILD_DIR}/app.jar"
+                sh "ls *.jar > name.txt"
+                script {
+                    JAR_NAME = readFile('name.txt').trim()
+                }
+                sh "cp target/${JAR_NAME} ${env.BUILD_DIR}/${JAR_NAME}"
                 sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout > version.txt"
                 script {
                     APP_VERSION = readFile('version.txt').trim()
@@ -32,7 +37,7 @@ pipeline {
                 label 'docker-agent'
             }
             steps {
-                 sh "cp ${env.BUILD_DIR}/app.jar ."
+                 sh "mv ${env.BUILD_DIR}/${JAR_NAME} app.jar"
                  sh "docker build -t my-app-image:${APP_VERSION} ."
             }
         }
