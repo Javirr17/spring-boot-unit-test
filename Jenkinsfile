@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
-                sh "ls *.jar > name.txt"
+                sh "ls target/*.jar > name.txt"
                 script {
                     JAR_NAME = readFile('name.txt').trim()
                 }
