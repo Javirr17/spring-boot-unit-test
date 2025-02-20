@@ -2,9 +2,6 @@ def APP_VERSION = ''
 
 pipeline {
     agent any
-    triggers {
-        pollSCM '* * * * *'
-    }
     environment {
         BUILD_DIR = '/tmp/build'  // Directorio compartido para almacenar el .jar generado
     }
